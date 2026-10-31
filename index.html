@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#0C2340">
+  <meta name="description" content="AKSARA - Aplikasi Pelestarian Bahasa Daerah Inklusif Universitas Brawijaya untuk Disabilitas Netra dan Disleksia">
+  <title>AKSARA Mobile - Pelestarian Bahasa Daerah Inklusif</title>
+
+  <!-- Typography: Erode (dealt editorial serif) & Lexend (dyslexia scientific standard) -->
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=erode@400,500,600,700&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="assets/app-logo-cropped.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Noto+Sans+Balinese&family=Noto+Sans+Javanese:wght@400;600&family=Noto+Sans+Sundanese&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-standard font-lexend">
+  
+  <!-- Live Region Screen Reader (Polite Natural Human Announcements) -->
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true">
+    Aplikasi Aksara siap digunakan. Bahasa antarmuka: Bahasa Indonesia.
+  </div>
+
+  <!-- Audio Reader Visualizer Bar -->
+  <div id="audio-banner" class="audio-banner hidden" role="status" aria-hidden="true">
+    <div class="audio-pulse">
+      <span></span><span></span><span></span>
+    </div>
+    <span id="audio-banner-text">Membacakan teks suara...</span>
+    <button id="btn-stop-audio" class="btn-banner-action" aria-label="Hentikan audio">Berhenti</button>
+  </div>
+
+  <!-- Viewport Wrapper (Desktop phone frame simulator + Native mobile) -->
+  <div class="app-stage">
+    
+    <!-- Phone Mockup Device -->
+    <main class="mobile-device" id="mobile-device" role="main" aria-label="Aplikasi AKSARA Mobile Inklusif">
+      
+      <!-- TOP DECK: ACCESSIBILITY & DIALECT CONTROL BAR -->
+      <header class="app-masthead" role="banner">
+        <div class="masthead-upper">
+          <div class="brand-block" aria-label="Aplikasi AKSARA">
+            <div class="brand-logo-frame">
+              <img src="assets/app-logo-cropped.png" alt="" class="brand-logo-img" width="36" height="21">
+            </div>
+            <div class="brand-titles">
+              <h1 class="brand-name" id="ui-brand-title">
+                <img src="assets/app-wordmark-cropped.png" alt="AKSARA" class="brand-wordmark-img" width="94" height="21">
+                <span id="ui-brand-text" class="sr-only">AKSARA</span>
+              </h1>
+            </div>
+          </div>
+
+          <!-- Quick Accessibility Toolbar -->
+          <div class="a11y-toolbar" role="toolbar" aria-label="Alat Aksesibilitas Cepat">
+            
+            <!-- Language Switcher ID / EN -->
+            <button id="btn-lang-toggle" class="deck-btn" aria-label="Ganti bahasa aplikasi. Saat ini: Bahasa Indonesia" title="Switch Language">
+              <span id="flag-indicator" class="deck-btn-tag">ID</span>
+            </button>
+
+            <!-- Dyslexia Font & Spacing Mode -->
+            <button id="btn-dyslexia-toggle" class="deck-btn" aria-label="Aktifkan mode baca disleksia dengan huruf Lexend dan spasi lebar" title="Mode Disleksia">
+              <span class="deck-btn-glyph" aria-hidden="true">Aa</span>
+              <span class="sr-only">Mode Disleksia</span>
+            </button>
+
+            <!-- Dark / Light Theme Toggle -->
+            <button id="btn-theme-toggle" class="deck-btn" aria-label="Ganti mode tema gelap atau terang" title="Tema Gelap / Terang">
+              <svg id="theme-icon-moon" class="deck-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+              </svg>
+              <svg id="theme-icon-sun" class="deck-svg hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2"></path>
+                <path d="M12 20v2"></path>
+                <path d="m4.93 4.93 1.41 1.41"></path>
+                <path d="m17.66 17.66 1.41 1.41"></path>
+                <path d="M2 12h2"></path>
+                <path d="M20 12h2"></path>
+                <path d="m6.34 17.66-1.41 1.41"></path>
+                <path d="m19.07 4.93-1.41 1.41"></path>
+              </svg>
+              <span class="sr-only">Tema Gelap / Terang</span>
+            </button>
+
+            <!-- Font Size Scaling -->
+            <button id="btn-font-scale" class="deck-btn" aria-label="Ubah ukuran huruf teks. Level saat ini: Normal" title="Perbesar Ukuran Teks">
+              <span id="font-scale-tag" class="deck-btn-glyph" aria-hidden="true">A</span>
+              <span class="sr-only">Perbesar Teks</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dialect Selector Strip -->
+        <div class="dialect-deck" role="region" aria-label="Pilihan Bahasa Daerah">
+          <label for="select-dialect" class="deck-label" id="ui-lbl-dialect">Bahasa Daerah</label>
+          <div class="select-field">
+            <select id="select-dialect" aria-label="Pilih dialek bahasa daerah yang ingin dipelajari">
+              <option value="jawa">Jawa (Ngoko &amp; Kromo Inggil)</option>
+              <option value="sunda">Sunda (Loma &amp; Lemes)</option>
+              <option value="batak">Batak (Toba &amp; Mandailing)</option>
+              <option value="bali">Bali (Andap &amp; Alus)</option>
+              <option value="melayu">Melayu Nusantara</option>
+            </select>
+          </div>
+          <button id="btn-read-screen" class="btn-voice-lead" aria-label="Bacakan seluruh layar saat ini dengan suara" title="Bacakan Layar">
+            <svg class="deck-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+            <span id="ui-btn-listen">Dengar</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- SCROLLABLE CONTENT VIEWPORT -->
+      <section class="device-scroll-body" id="main-view" tabindex="-1">
+        
+        <!-- PANEL 1: MATERI PEMBELAJARAN (LESSONS) -->
+        <article id="panel-materi" class="screen-panel active" role="tabpanel" aria-labelledby="tab-nav-materi">
+          <header class="panel-intro">
+            <h2 class="panel-heading" id="ui-home-title">Sugeng Rawuh di AKSARA</h2>
+            <p class="panel-summary" id="ui-home-desc">Ruang pelestarian bahasa daerah berkeadilan akses bagi mahasiswa Universitas Brawijaya dan masyarakat digital.</p>
+          </header>
+
+          <!-- Accessibility Manifest Callout -->
+          <div class="deck-callout" role="region" aria-label="Spesifikasi Aksesibilitas">
+            <div class="callout-indicator" aria-hidden="true">
+              <svg class="deck-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m9 12 2 2 4-4"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <h3 class="callout-title" id="ui-a11y-title">Aksesibilitas Aktif</h3>
+              <p class="callout-text" id="ui-a11y-desc">Sesuai standar WCAG AAA, font ramah disleksia Lexend, pembaca layar ramah manusia, serta tata letak tanpa silau.</p>
+              <button id="btn-open-enablink" class="btn-glyph-audio" style="margin-top: 8px;" aria-label="Buka Pusat Studi dan Layanan Disabilitas Enablink UB">
+                <span>Pusat Inklusi Enablink UB &rarr;</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Section: Speech Registers (Etika Tutur) -->
+          <section class="deck-section" aria-label="Tingkatan Tutur Kata">
+            <h3 class="section-badge-title" id="ui-title-registers">Tingkatan Bahasa &amp; Etika Tutur</h3>
+            
+            <div class="speech-card" role="article">
+              <div class="card-meta-row">
+                <span class="register-pill pill-casual" id="ui-pill-casual">Santai (Rekan Sebaya)</span>
+                <button class="btn-voice-trigger" data-speech="Aku mangan sego neng warung kampus" aria-label="Dengarkan pengucapan santai: Aku mangan sego neng warung kampus">
+                  <svg class="deck-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                  <span class="sr-only">Putar Suara</span>
+                </button>
+              </div>
+              <h4 class="speech-quote">"Aku mangan sego neng warung kampus"</h4>
+              <p class="speech-definition"><strong id="ui-lbl-mean-1">Arti:</strong> <span id="ui-val-mean-1">Saya makan nasi di warung kampus</span></p>
+              <p class="speech-context"><strong id="ui-lbl-ctx-1">Konteks:</strong> <span id="ui-val-ctx-1">Digunakan untuk percakapan akrab dengan teman kuliah seangkatan.</span></p>
+            </div>
+
+            <div class="speech-card" role="article">
+              <div class="card-meta-row">
+                <span class="register-pill pill-formal" id="ui-pill-formal">Sopan (Dosen &amp; Orang Tua)</span>
+                <button class="btn-voice-trigger" data-speech="Kula nedha sekul wonten ing kantin kampus" aria-label="Dengarkan pengucapan halus: Kula nedha sekul wonten ing kantin kampus">
+                  <svg class="deck-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                  <span class="sr-only">Putar Suara</span>
+                </button>
+              </div>
+              <h4 class="speech-quote">"Kula nedha sekul wonten ing kantin kampus"</h4>
+              <p class="speech-definition"><strong id="ui-lbl-mean-2">Arti:</strong> <span id="ui-val-mean-2">Saya makan nasi di kantin kampus (Ragam Halus)</span></p>
+              <p class="speech-context"><strong id="ui-lbl-ctx-2">Konteks:</strong> <span id="ui-val-ctx-2">Wajib digunakan saat menyapa dosen, staf kampus, atau orang yang dihormati.</span></p>
+            </div>
+          </section>
+
+          <!-- Section: Traditional Script Glyph Cards -->
+          <section class="deck-section" aria-label="Pengenalan Aksara Asli">
+            <h3 class="section-badge-title" id="ui-title-scripts">Aksara Tradisional Nusantara</h3>
+            
+            <div class="glyph-grid" role="list">
+              <!-- Populated dynamically via app.js -->
+            </div>
+          </section>
+
+          <!-- Section: Campus Situational Phrases -->
+          <section class="deck-section" aria-label="Percakapan Sehari-hari Kampus">
+            <h3 class="section-badge-title" id="ui-title-phrases">Frasa Percakapan Mahasiswa UB</h3>
+            <div class="phrase-feed" id="phrase-feed" role="list">
+              <!-- Populated dynamically via app.js -->
+            </div>
+          </section>
+        </article>
+
+        <!-- PANEL 2: KAMUS KOSA KATA (DICTIONARY) -->
+        <article id="panel-kamus" class="screen-panel" role="tabpanel" aria-labelledby="tab-nav-kamus">
+          <header class="panel-intro">
+            <h2 class="panel-heading" id="ui-kamus-title">Kamus Kosa Kata Daerah</h2>
+            <p class="panel-summary" id="ui-kamus-desc">Pencarian kosa kata antardialek dilengkapi perbandingan ragam sopan dan ragam santai.</p>
+          </header>
+
+          <!-- Search Field -->
+          <div class="search-block" role="search">
+            <label for="input-dict-search" class="sr-only" id="ui-lbl-dict-search">Cari kosa kata bahasa Indonesia, Inggris, atau daerah</label>
+            <div class="search-input-wrap">
+              <svg class="search-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="input-dict-search" placeholder="Cari kata: makan, belajar, buku..." aria-label="Ketik kata untuk mencari terjemahan">
+              <button id="btn-clear-search" class="btn-clear-input hidden" aria-label="Bersihkan pencarian">
+                <svg class="deck-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Category Filter Bar -->
+          <div class="category-strip" role="group" aria-label="Kategori kosa kata">
+            <button class="filter-tag active" data-cat="all" id="tag-all">Semua</button>
+            <button class="filter-tag" data-cat="kampus" id="tag-campus">Kampus &amp; Kuliah</button>
+            <button class="filter-tag" data-cat="makan" id="tag-food">Makanan</button>
+            <button class="filter-tag" data-cat="salam" id="tag-greet">Salam &amp; Sapaan</button>
+          </div>
+
+          <!-- Dictionary Entries Container -->
+          <div class="dictionary-stack" id="dictionary-stack" role="feed" aria-label="Daftar hasil kosa kata">
+            <!-- Populated dynamically via app.js -->
+          </div>
+        </article>
+
+        <!-- PANEL 3: SIMULATOR TERJEMAHAN (TRANSLATOR) -->
+        <article id="panel-terjemah" class="screen-panel" role="tabpanel" aria-labelledby="tab-nav-terjemah">
+          <header class="panel-intro">
+            <h2 class="panel-heading" id="ui-trans-title">Simulator Terjemahan Dialek</h2>
+            <p class="panel-summary" id="ui-trans-desc">Penerjemahan kalimat praktis ke dalam ragam santun kromo dan ragam akrab ngoko.</p>
+          </header>
+
+          <div class="translator-deck">
+            <div class="trans-input-card">
+              <div class="trans-top-action">
+                <label for="text-translate-input" class="card-label" id="ui-lbl-trans-input">Kalimat Asal</label>
+                <button id="btn-voice-input" class="btn-text-voice" aria-label="Dengarkan teks masukan">
+                  <svg class="deck-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                  <span>Dengar</span>
+                </button>
+              </div>
+              <textarea id="text-translate-input" rows="3" placeholder="Contoh: Permisi bapak dosen, saya ingin bertanya materi..." aria-label="Ketik kalimat yang ingin diterjemahkan"></textarea>
+            </div>
+
+            <!-- Quick Phrase Preset Chips -->
+            <div class="preset-strip" role="region" aria-label="Contoh kalimat cepat">
+              <span class="preset-title" id="ui-lbl-preset">Pilihan cepat:</span>
+              <button class="chip-preset" data-phrase="Permisi bapak dosen, saya ingin bertanya materi">Tanya Dosen</button>
+              <button class="chip-preset" data-phrase="Ayo kita ke kantin makan siang bersama">Ajak Makan</button>
+              <button class="chip-preset" data-phrase="Terima kasih banyak atas bantuan dan bimbingannya">Terima Kasih</button>
+            </div>
+
+            <!-- Action Button -->
+            <button id="btn-execute-translate" class="btn-solid-action">
+              <span id="ui-btn-translate-text">Terjemahkan Kalimat</span>
+            </button>
+
+            <!-- Translation Output Stack -->
+            <div class="trans-output-stack" aria-live="polite">
+              <h3 class="output-lead" id="ui-lbl-trans-results">Hasil Terjemahan</h3>
+
+              <div class="result-slab slab-formal" role="region" aria-label="Hasil Ragam Sopan">
+                <div class="slab-head">
+                  <span class="register-pill pill-formal" id="ui-pill-res-formal">Ragam Sopan (Kromo / Lemes)</span>
+                  <button class="btn-voice-trigger" id="btn-audio-formal" aria-label="Dengarkan hasil ragam sopan">
+                    <svg class="deck-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <span class="sr-only">Putar Suara</span>
+                  </button>
+                </div>
+                <p class="result-text" id="val-trans-formal">Nyuwun sewu bapak dosen, kula badhe nyuwun pirsa babagan materi kuliah.</p>
+                <p class="result-annotation" id="note-trans-formal">Direkomendasikan saat berdialog dengan dosen pengampu atau pejabat kampus.</p>
+              </div>
+
+              <div class="result-slab slab-casual" role="region" aria-label="Hasil Ragam Santai">
+                <div class="slab-head">
+                  <span class="register-pill pill-casual" id="ui-pill-res-casual">Ragam Santai (Ngoko / Loma)</span>
+                  <button class="btn-voice-trigger" id="btn-audio-casual" aria-label="Dengarkan hasil ragam santai">
+                    <svg class="deck-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <span class="sr-only">Putar Suara</span>
+                  </button>
+                </div>
+                <p class="result-text" id="val-trans-casual">Nyuwun sewu pak, aku arep takon babagan materi kuliah iki.</p>
+                <p class="result-annotation" id="note-trans-casual">Gaya santai untuk diskusi akrab bersama rekan sesama mahasiswa.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PANEL 4: KUIS & GAME BUDAYA (QUIZ) -->
+        <article id="panel-game" class="screen-panel" role="tabpanel" aria-labelledby="tab-nav-game">
+          <header class="panel-intro">
+            <h2 class="panel-heading" id="ui-game-title">Kuis Kebudayaan &amp; Etika</h2>
+            <p class="panel-summary" id="ui-game-desc">Uji pemahaman santun berbahasa dengan umpan balik sensorik getar dan nada sintetis.</p>
+          </header>
+
+          <div class="quiz-pod" role="region" aria-label="Pertanyaan Kuis Interaktif">
+            <div class="quiz-status-row">
+              <span class="status-indicator" id="ui-quiz-counter">Pertanyaan 1 dari 3</span>
+              <span class="score-badge" id="ui-quiz-score">Skor: 0</span>
+            </div>
+
+            <!-- Accessible Progress Indicator -->
+            <div class="quiz-track" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" aria-label="Progres Kuis">
+              <div class="quiz-fill" id="quiz-fill-bar" style="width: 33.33%;"></div>
+            </div>
+
+            <div class="quiz-body">
+              <h3 class="quiz-prompt" id="ui-quiz-prompt">
+                Kamu ingin menyapa dosen di Gedung Rektorat UB. Kalimat manakah yang paling santun dan tepat?
+              </h3>
+
+              <button class="btn-voice-read-q" id="btn-quiz-speech-q" aria-label="Bacakan soal kuis ini">
+                <svg class="deck-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <span id="ui-btn-read-prompt">Dengarkan Pertanyaan</span>
+              </button>
+
+              <div class="quiz-options-group" id="quiz-options-group" role="radiogroup" aria-label="Pilihan Jawaban">
+                <!-- Populated dynamically via app.js -->
+              </div>
+
+              <!-- Live Feedback Message -->
+              <div id="quiz-response-box" class="quiz-response-box hidden" aria-live="assertive">
+                <!-- Injected via app.js -->
+              </div>
+
+              <button id="btn-next-question" class="btn-solid-action hidden">
+                <span id="ui-btn-next-q">Pertanyaan Berikutnya</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- PANEL 5: ENABLINK UB & PENGATURAN (ACCESSIBILITY & PORTAL) -->
+        <article id="panel-enablink" class="screen-panel" role="tabpanel" aria-labelledby="tab-nav-enablink">
+          <header class="panel-intro">
+            <h2 class="panel-heading" id="ui-enablink-title">Enablink UB &amp; Inklusi</h2>
+            <p class="panel-summary" id="ui-enablink-desc">Integrasi ekosistem pendidikan inklusif Universitas Brawijaya bersama PSLD UB.</p>
+          </header>
+
+          <!-- Official UB Codex Card -->
+          <div class="ub-monument-card" role="article">
+            <div class="monument-meta">
+              <span class="monument-tag">PORTAL RESMI UB</span>
+              <span class="monument-loc">Malang, Indonesia</span>
+            </div>
+            <h3 class="monument-name">Universitas Brawijaya</h3>
+            <p class="monument-narrative" id="ui-ub-narrative">
+              Pelopor pendidikan tinggi inklusif di Indonesia. Melalui inovasi AKSARA, kampus Brawijaya menjembatani pelestarian bahasa ibu bagi mahasiswa perantau nusantara tanpa batasan fisik maupun kognitif.
+            </p>
+            <div class="monument-links">
+              <a href="https://ub.ac.id" target="_blank" rel="noopener noreferrer" class="link-ub-main" aria-label="Buka portal utama Universitas Brawijaya di ub.ac.id (terbuka di jendela baru)">
+                <span>Portal Resmi ub.ac.id</span>
+                <span class="link-arrow" aria-hidden="true">&nearr;</span>
+              </a>
+              <a href="https://psld.ub.ac.id" target="_blank" rel="noopener noreferrer" class="link-ub-sub" aria-label="Buka Pusat Studi dan Layanan Disabilitas UB di psld.ub.ac.id (terbuka di jendela baru)">
+                <span>Layanan Disabilitas PSLD UB</span>
+                <span class="link-arrow" aria-hidden="true">&nearr;</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Sensory Preferences Deck -->
+          <div class="deck-settings-pod" role="region" aria-label="Preferensi Sensorik &amp; Tampilan">
+            <h3 class="settings-lead-title" id="ui-title-preferences">Preferensi Sensorik &amp; Tampilan</h3>
+
+            <!-- Dark Theme Toggle Row -->
+            <div class="preference-row">
+              <div class="pref-labels">
+                <label for="check-pref-dark" class="pref-title" id="ui-lbl-pref-dark">Mode Tema Gelap (Dark Theme)</label>
+                <p class="pref-caption" id="ui-sub-pref-dark">Mengaktifkan kanvas malam berornamen batik gelap untuk kenyamanan mata di ruangan redup.</p>
+              </div>
+              <input type="checkbox" id="check-pref-dark" class="pref-toggle-box" aria-label="Nyalakan atau matikan mode tema gelap">
+            </div>
+
+            <!-- Dyslexia Toggle Row -->
+            <div class="preference-row">
+              <div class="pref-labels">
+                <label for="check-pref-dyslexia" class="pref-title" id="ui-lbl-pref-dyslexia">Mode Ramah Disleksia</label>
+                <p class="pref-caption" id="ui-sub-pref-dyslexia">Menggunakan jenis huruf Lexend dengan bobot bawah stabil, spasi longgar, dan latar krem lembut.</p>
+              </div>
+              <input type="checkbox" id="check-pref-dyslexia" class="pref-toggle-box" aria-label="Nyalakan atau matikan mode font disleksia">
+            </div>
+
+            <!-- Font Size Scaling Row -->
+            <div class="preference-row">
+              <div class="pref-labels">
+                <label for="btn-pref-font-cycle" class="pref-title" id="ui-lbl-pref-fontsize">Ukuran Huruf Teks</label>
+                <p class="pref-caption" id="ui-sub-pref-fontsize">Perbesar teks hingga 140% untuk mempermudah kenyamanan membaca.</p>
+              </div>
+              <button id="btn-pref-font-cycle" class="deck-btn" aria-label="Ubah ukuran teks">
+                <span id="pref-font-scale-label">Normal (100%)</span>
+              </button>
+            </div>
+
+            <!-- Haptic Vibration Row -->
+            <div class="preference-row">
+              <div class="pref-labels">
+                <label for="check-pref-haptic" class="pref-title" id="ui-lbl-pref-haptic">Umpan Balik Sensorik &amp; Suara</label>
+                <p class="pref-caption" id="ui-sub-pref-haptic">Menghasilkan nada sintetis dan getaran lembut pada aksi navigasi dan kuis.</p>
+              </div>
+              <input type="checkbox" id="check-pref-haptic" class="pref-toggle-box" checked aria-label="Nyalakan atau matikan efek getar dan audio sensorik">
+            </div>
+
+            <!-- Speech Rate Slider -->
+            <div class="preference-slider-row">
+              <div class="slider-meta">
+                <label for="slider-speech-speed" class="pref-title" id="ui-lbl-pref-speed">Kecepatan Pembaca Suara (TTS)</label>
+                <span id="indicator-speed" class="speed-figure">1.0x</span>
+              </div>
+              <input type="range" id="slider-speech-speed" min="0.6" max="1.4" step="0.1" value="1.0" class="pref-slider" aria-label="Atur kecepatan suara pembaca dari 0.6x hingga 1.4x">
+            </div>
+          </div>
+
+          <!-- Academic Source Credit -->
+          <footer class="deck-academic-credit" role="contentinfo">
+            <h4 class="credit-title" id="ui-title-citation">Dasar Karya Ilmiah</h4>
+            <p class="credit-body">
+              Disusun dari riset sosiologi Universitas Brawijaya: <em>"Changing the Future: Aksara as Learning Application to Introduce Traditional Language to Digital Society"</em> (ISF Brawijaya University).
+            </p>
+          </footer>
+        </article>
+
+      </section>
+
+      <!-- BOTTOM NAVIGATION STRIP -->
+      <nav class="masthead-nav" role="navigation" aria-label="Navigasi Utama">
+        <button class="nav-button active" data-tab="panel-materi" id="tab-nav-materi" role="tab" aria-selected="true" aria-controls="panel-materi">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span class="nav-caption" id="ui-nav-materi">Beranda</span>
+        </button>
+
+        <button class="nav-button" data-tab="panel-kamus" id="tab-nav-kamus" role="tab" aria-selected="false" aria-controls="panel-kamus">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span class="nav-caption" id="ui-nav-kamus">Kamus</span>
+        </button>
+
+        <button class="nav-button" data-tab="panel-terjemah" id="tab-nav-terjemah" role="tab" aria-selected="false" aria-controls="panel-terjemah">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m5 8 6 6"></path>
+            <path d="m4 14 6-6 2-3"></path>
+            <path d="M2 5h12"></path>
+            <path d="M7 2h1"></path>
+            <path d="m22 22-5-10-5 10"></path>
+            <path d="M14 18h6"></path>
+          </svg>
+          <span class="nav-caption" id="ui-nav-terjemah">Translate</span>
+        </button>
+
+        <button class="nav-button" data-tab="panel-game" id="tab-nav-game" role="tab" aria-selected="false" aria-controls="panel-game">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="2" y="6" width="20" height="12" rx="6"></rect>
+            <line x1="6" y1="12" x2="10" y2="12"></line>
+            <line x1="8" y1="10" x2="8" y2="14"></line>
+            <line x1="15" y1="13" x2="15.01" y2="13"></line>
+            <line x1="18" y1="11" x2="18.01" y2="11"></line>
+          </svg>
+          <span class="nav-caption" id="ui-nav-game">Game</span>
+        </button>
+      </nav>
+
+    </main>
+
+    <!-- Side Inspection Panel for Desktop Testing -->
+    <aside class="desktop-side-console" aria-label="Konsol Uji Prototipe">
+      <div class="console-card">
+        <h3 class="console-title">Simulator AKSARA Mobile</h3>
+        <p class="console-text">Prototipe ini dirancang mengikuti arahan <em>taste-skill</em>: tipografi berkarakter (Erode &amp; Lexend), permukaan bertingkat tanpa bayangan buatan, nol emoji UI mentah, dan kepatuhan WCAG AAA.</p>
+        
+        <div class="console-btn-group">
+          <button id="btn-toggle-viewport" class="console-btn">Beralih Layar Penuh / Mockup</button>
+          <button id="btn-simulate-sr" class="console-btn">Uji Suara Screen Reader Virtual</button>
+        </div>
+
+        <div class="console-meta-item">
+          <strong>Bahasa Antarmuka Aktif:</strong>
+          <span id="console-lang-text">Bahasa Indonesia (ID)</span>
+        </div>
+        <div class="console-meta-item">
+          <strong>Art Direction:</strong>
+          <span>The page is the object (Nusantara Manuscript Codex)</span>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

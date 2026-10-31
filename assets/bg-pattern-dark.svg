@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 860" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Dark Background Glows matching the exact lighting of the uploaded image -->
+    <radialGradient id="dark-glow-amber" cx="95%" cy="92%" r="65%">
+      <stop offset="0%" stop-color="#7C3B00" stop-opacity="0.45" />
+      <stop offset="50%" stop-color="#451E03" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#091424" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="dark-glow-slate" cx="10%" cy="85%" r="55%">
+      <stop offset="0%" stop-color="#1E3A5F" stop-opacity="0.5" />
+      <stop offset="60%" stop-color="#0E223D" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#091424" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="dark-base-sky" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#0D1B2E" />
+      <stop offset="45%" stop-color="#0B1728" />
+      <stop offset="100%" stop-color="#070F1C" />
+    </linearGradient>
+
+    <!-- 4-Petal Motif Large (Kawung / Cengkeh) with soft stipple dots -->
+    <g id="motif-large">
+      <!-- Petal Top -->
+      <path d="M 0,0 C -12,-8 -22,-22 0,-36 C 22,-22 12,-8 0,0 Z" fill="#F59E0B" fill-opacity="0.12" />
+      <!-- Petal Bottom -->
+      <path d="M 0,0 C -12,8 -22,22 0,36 C 22,22 12,8 0,0 Z" fill="#F59E0B" fill-opacity="0.12" />
+      <!-- Petal Left -->
+      <path d="M 0,0 C -8,-12 -22,-22 -36,0 C -22,22 -8,12 0,0 Z" fill="#F59E0B" fill-opacity="0.12" />
+      <!-- Petal Right -->
+      <path d="M 0,0 C 8,-12 22,-22 36,0 C 22,22 8,12 0,0 Z" fill="#F59E0B" fill-opacity="0.12" />
+      <!-- Center Core & Stippling -->
+      <circle cx="0" cy="0" r="3" fill="#FDE68A" fill-opacity="0.2" />
+      <circle cx="0" cy="-15" r="1" fill="#FFFFFF" fill-opacity="0.3" />
+      <circle cx="0" cy="-22" r="1.2" fill="#FFFFFF" fill-opacity="0.25" />
+      <circle cx="0" cy="15" r="1" fill="#FFFFFF" fill-opacity="0.3" />
+      <circle cx="0" cy="22" r="1.2" fill="#FFFFFF" fill-opacity="0.25" />
+      <circle cx="-15" cy="0" r="1" fill="#FFFFFF" fill-opacity="0.3" />
+      <circle cx="-22" cy="0" r="1.2" fill="#FFFFFF" fill-opacity="0.25" />
+      <circle cx="15" cy="0" r="1" fill="#FFFFFF" fill-opacity="0.3" />
+      <circle cx="22" cy="0" r="1.2" fill="#FFFFFF" fill-opacity="0.25" />
+    </g>
+
+    <!-- 4-Petal Motif Small (Silhouetted secondary pattern) -->
+    <g id="motif-small">
+      <path d="M 0,0 C -8,-5 -15,-15 0,-24 C 15,-15 8,-5 0,0 Z" fill="#E2E8F0" fill-opacity="0.08" />
+      <path d="M 0,0 C -8,5 -15,15 0,24 C 15,15 8,5 0,0 Z" fill="#E2E8F0" fill-opacity="0.08" />
+      <path d="M 0,0 C -5,-8 -15,-15 -24,0 C -15,15 -5,8 0,0 Z" fill="#E2E8F0" fill-opacity="0.08" />
+      <path d="M 0,0 C 5,-8 15,-15 24,0 C 15,15 5,8 0,0 Z" fill="#E2E8F0" fill-opacity="0.08" />
+    </g>
+  </defs>
+
+  <!-- Base Night Sky Canvas -->
+  <rect width="100%" height="100%" fill="url(#dark-base-sky)" />
+  <rect width="100%" height="100%" fill="url(#dark-glow-slate)" />
+  <rect width="100%" height="100%" fill="url(#dark-glow-amber)" />
+
+  <!-- Staggered Batik Motif Array (matching positions from user image) -->
+  <!-- Column A & C: Small motifs at Y = 135, 275, 415, 555, 695, 835 -->
+  <g transform="translate(180, 140)"><use href="#motif-small" /></g>
+  <g transform="translate(380, 140)"><use href="#motif-small" /></g>
+
+  <g transform="translate(180, 280)"><use href="#motif-small" /></g>
+  <g transform="translate(380, 280)"><use href="#motif-small" /></g>
+
+  <g transform="translate(180, 420)"><use href="#motif-small" /></g>
+  <g transform="translate(380, 420)"><use href="#motif-small" /></g>
+
+  <g transform="translate(180, 560)"><use href="#motif-small" /></g>
+  <g transform="translate(380, 560)"><use href="#motif-small" /></g>
+
+  <g transform="translate(180, 700)"><use href="#motif-small" /></g>
+  <g transform="translate(380, 700)"><use href="#motif-small" /></g>
+
+  <g transform="translate(180, 840)"><use href="#motif-small" /></g>
+  <g transform="translate(380, 840)"><use href="#motif-small" /></g>
+
+  <!-- Column B & D: Large motifs at Y = 205, 345, 485, 625, 765 -->
+  <g transform="translate(65, 205)"><use href="#motif-large" /></g>
+  <g transform="translate(280, 205)"><use href="#motif-large" /></g>
+
+  <g transform="translate(65, 345)"><use href="#motif-large" /></g>
+  <g transform="translate(280, 345)"><use href="#motif-large" /></g>
+
+  <g transform="translate(65, 485)"><use href="#motif-large" /></g>
+  <g transform="translate(280, 485)"><use href="#motif-large" /></g>
+
+  <g transform="translate(65, 625)"><use href="#motif-large" /></g>
+  <g transform="translate(280, 625)"><use href="#motif-large" /></g>
+
+  <g transform="translate(65, 765)"><use href="#motif-large" /></g>
+  <g transform="translate(280, 765)"><use href="#motif-large" /></g>
+
+</svg>
+
