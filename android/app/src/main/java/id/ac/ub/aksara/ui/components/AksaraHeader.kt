@@ -168,7 +168,7 @@ fun AksaraHeader(
                     fontSize = 12.sp
                 )
 
-                Dialect.entries.forEach { dialect ->
+                Dialect.values().forEach { dialect ->
                     val isSelected = dialect == uiState.selectedDialect
                     val chipBg = if (isSelected) BrandGold else Color(0xFF162B47)
                     val chipTextColor = if (isSelected) Color.White else Color(0xFFCBD5E1)

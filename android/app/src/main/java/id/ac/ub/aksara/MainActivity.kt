@@ -3,7 +3,6 @@ package id.ac.ub.aksara
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import id.ac.ub.aksara.model.AppScreen
 import id.ac.ub.aksara.ui.components.AksaraBottomNav
 import id.ac.ub.aksara.ui.components.AksaraHeader
@@ -26,12 +26,11 @@ import id.ac.ub.aksara.viewmodel.AksaraViewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: AksaraViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
+            val viewModel: AksaraViewModel = viewModel()
             val uiState by viewModel.uiState.collectAsState()
 
             AksaraTheme(

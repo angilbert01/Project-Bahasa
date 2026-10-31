@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
-import androidx.compose.material.icons.filled.GTranslate
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.SportsEsports
+import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -53,7 +53,7 @@ fun AksaraBottomNav(
     val items = listOf(
         NavItem(AppScreen.HOME, Icons.Default.Home, "Beranda", "Home"),
         NavItem(AppScreen.DICTIONARY, Icons.Default.Book, "Kamus", "Dictionary"),
-        NavItem(AppScreen.TRANSLATE, Icons.Default.GTranslate, "Translate", "Translate"),
+        NavItem(AppScreen.TRANSLATE, Icons.Default.Translate, "Translate", "Translate"),
         NavItem(AppScreen.GAME, Icons.Default.SportsEsports, "Game", "Game")
     )
 

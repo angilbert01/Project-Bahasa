@@ -8,10 +8,13 @@ Implementasi native mobile menggunakan **Android Jetpack Compose**, **Material 3
 ## 🚀 Cara Menjalankan Proyek di Android Studio
 
 1. Buka **Android Studio** (Flamingo / Hedgehog / Iguana / Jellyfish / Koala / Ladybug atau versi terbaru).
-2. Pilih **File > Open**, lalu arahkan ke folder `android/` di direktori ini.
-3. Tunggu proses **Gradle Sync** selesai secara otomatis.
-4. Pilih target perangkat (**Android Emulator** atau **HP Android via USB Debugging**).
+2. Pilih **File > Open**, lalu arahkan dan pilih folder `android/` (**PENTING**: buka folder `android/`, bukan root workspace).
+3. Tunggu proses **Gradle Sync** selesai secara otomatis (Gradle Wrapper v8.6 telah terpasang lengkap dengan `gradle-wrapper.jar`).
+4. Pilih target perangkat (**Android Emulator** atau **HP Android fisik via USB Debugging**).
 5. Klik tombol **Run 'app'** (`Shift + F10`).
+
+> [!NOTE]
+> Pastikan di Android Studio: **Project Structure > SDK Location > Gradle Settings**, Gradle JDK diset ke **JDK 17** (Embedded JDK atau JDK 17+).
 
 ---
 
