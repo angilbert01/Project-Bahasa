@@ -13,8 +13,8 @@ val NavOrangeDark = Color(0xFFE69500)
 val CanvasLight = Color(0xFFF8F5EE)
 val CanvasDark = Color(0xFF081220)
 
-val SurfaceLight = Color(0xFFFFFFFF)
-val SurfaceDark = Color(0xFF101C2E)
+val SurfaceLight = Color(0xF2FFFFFF)
+val SurfaceDark = Color(0xF2101C2E)
 val SurfaceSunkenLight = Color(0xFFEAE5DA)
 val SurfaceSunkenDark = Color(0xFF0B1422)
 
