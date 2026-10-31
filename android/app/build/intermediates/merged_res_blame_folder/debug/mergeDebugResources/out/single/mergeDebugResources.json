@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "id.ac.ub.aksara.app-debug-51:/drawable_ic_app_logo.png.flat",
+        "source": "id.ac.ub.aksara.app-main-53:/drawable/ic_app_logo.png"
+    },
+    {
+        "merged": "id.ac.ub.aksara.app-debug-51:/drawable_ic_app_wordmark.png.flat",
+        "source": "id.ac.ub.aksara.app-main-53:/drawable/ic_app_wordmark.png"
+    },
+    {
+        "merged": "id.ac.ub.aksara.app-debug-51:/drawable_bg_pattern_light.jpg.flat",
+        "source": "id.ac.ub.aksara.app-main-53:/drawable/bg_pattern_light.jpg"
+    }
+]

@@ -1,0 +1,13 @@
+R_DEF: Internal format may change without notice
+local
+color bg_dark
+color bg_light
+color brand_gold
+color brand_navy
+color nav_orange
+drawable bg_pattern_light
+drawable ic_app_logo
+drawable ic_app_wordmark
+string app_name
+string app_subtitle
+style Theme.Aksara
